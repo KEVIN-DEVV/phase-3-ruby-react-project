@@ -1,7 +1,5 @@
-require 'active_record'
 
 class Course < ActiveRecord::Base
-  attr_accessor :name, :code
-    belongs_to :students
-    belongs_to :lecturers
+    belongs_to :student
+    belongs_to :lecturer
 end
