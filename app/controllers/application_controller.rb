@@ -6,10 +6,10 @@ class ApplicationController < Sinatra::Base
     { message: "Good luck with your project!" }.to_json
   end
 
-
 ##CRUD Operations for the Students
   get '/students' do
-    Student.all.to_json
+    students = Student.all.includes(:courses)
+    students.to_json(include: :courses)  
   end
   get '/students/:id' do
     Student.find(params[:id]).to_json(include: :courses)
@@ -36,7 +36,7 @@ class ApplicationController < Sinatra::Base
 
 ##CRUD Operations for the Lecturers
   get '/lecturers' do
-    Lecturer.all.to_json
+    Lecturer.all.to_json(include: :courses)
   end
   get '/lecturers/:id' do
     Lecturer.find(params[:id]).to_json(include: :courses)
@@ -65,5 +65,8 @@ class ApplicationController < Sinatra::Base
   post '/courses' do
     course=Course.create(params)
     course.to_json
+  end
+  get '/courses' do
+    Course.all.to_json
   end
 end
